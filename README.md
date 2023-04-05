@@ -1,22 +1,33 @@
-Este é um script em Python que realiza a extração, transformação e carga (ETL) de dados da Bovespa. Ele lê um conjunto de arquivos de texto com informações diárias de negociação da bolsa, filtra apenas as ações do tipo 2 e salva todas as informações em um arquivo CSV único.
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>README</title>
+  </head>
+  <body>
+    <h1>README</h1>
 
-Bibliotecas
-O script utiliza apenas uma biblioteca do Python:
+    <p>Este código contém um programa de ETL (Extração, Transformação e Carga) que realiza a leitura de arquivos da B3, filtra os dados e os concatena em um único arquivo CSV. O programa está escrito em Python e utiliza as bibliotecas Pandas e Datetime.</p>
 
-Pandas (importada como pd) - utilizada para a leitura dos arquivos de texto, manipulação dos dados e escrita no arquivo CSV.
-Funções
-O script contém quatro funções:
+    <h2>Funcionamento do programa</h2>
 
-read_files: lê um arquivo de texto com informações diárias de negociação da bolsa, utiliza o formato "fixed width" e retorna um DataFrame com as informações lidas.
+    <p>O programa é composto pelas seguintes funções:</p>
 
-filter_stocks: filtra apenas as ações do tipo 2 e remove a coluna codbdi.
+    <ul>
+      <li><code>read_files</code>: realiza a leitura de um arquivo da B3, utilizando o método <code>read_fwf</code> da biblioteca Pandas. A função recebe quatro parâmetros: <code>path</code>, que é o caminho onde o arquivo está armazenado; <code>name_file</code>, que é o nome do arquivo; <code>year_date</code>, que é o ano que está sendo lido; e <code>type_file</code>, que é o tipo do arquivo (txt, por exemplo). A função retorna um dataframe com os dados do arquivo lido.</li>
+      <li><code>filter_stocks</code>: filtra os dados do dataframe para manter apenas as ações de código BDI 2, que são as ações padrão da B3. A função recebe um dataframe como parâmetro e retorna o mesmo dataframe com as ações filtradas.</li>
+      <li><code>parse_date</code>: converte a coluna de datas do dataframe para o formato datetime. A função recebe um dataframe como parâmetro e retorna o mesmo dataframe com a coluna de datas convertida.</li>
+      <li><code>parse_values</code>: converte as colunas de preços do dataframe para o formato float, dividindo o valor por 100. A função recebe um dataframe como parâmetro e retorna o mesmo dataframe com as colunas de preços convertidas.</li>
+      <li><code>concat_files</code>: realiza a leitura de vários arquivos da B3, utilizando a função <code>read_files</code>, e concatena os dados em um único dataframe. A função recebe cinco parâmetros: <code>path</code>, que é o caminho onde os arquivos estão armazenados; <code>name_file</code>, que é o nome base dos arquivos; <code>year_date</code>, que é uma lista com os anos que devem ser lidos; <code>type_file</code>, que é o tipo dos arquivos (txt, por exemplo); e <code>final_file</code>, que é o nome do arquivo CSV que será gerado com os dados concatenados. A função não retorna nada, mas gera um arquivo CSV com os dados concatenados.</li>
+    </ul>
 
-parse_date: converte a coluna data_pregao de string para formato de data.
+    <p>Para executar o programa, basta chamar a função <code>concat_files</code>, passando os parâmetros desejados.</p>
 
-parse_values: converte as colunas preco_abertura, preco_maximo, preco_minimo e preco_fechamento de string para formato float.
+    <h2>Exemplo de uso</h2>
 
-concat_files: executa as funções read_files, filter_stocks, parse_date e parse_values em uma lista de arquivos de texto, concatena os DataFrames resultantes e salva todas as informações em um arquivo CSV único.
+    <p>Aqui está um exemplo de como utilizar o programa:</p>
 
-Uso
-Para utilizar o script, é necessário informar o caminho para os arquivos de texto, o nome base do arquivo, a lista de anos que se deseja processar e o nome do arquivo CSV final. É possível também ajustar a posição das colunas e o nome das colunas do arquivo original editando as variáveis colspecs e names na função read_files.
-
+    <pre><code>year_date = ['2018', '2019', '2020']
+path = ''
+name_file = 'COTAHIST_A'
+type_file = 'txt
